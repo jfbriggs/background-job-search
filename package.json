@@ -1,0 +1,23 @@
+{
+  "name": "background-job-search",
+  "version": "1.0.0",
+  "description": "Background job posting search for job seeker app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfbriggs/background-job-search.git"
+  },
+  "keywords": [
+    "job",
+    "search"
+  ],
+  "author": "James Briggs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jfbriggs/background-job-search/issues"
+  },
+  "homepage": "https://github.com/jfbriggs/background-job-search#readme"
+}
