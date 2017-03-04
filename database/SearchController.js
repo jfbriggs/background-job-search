@@ -1,0 +1,8 @@
+var Search = require('./SearchModel.js');
+var Q = require('q');
+
+var findSearch = Q.nbind(Search.findOne, Search);
+var addSearch = Q.nbind(Search.create, Search);
+var findSearches = Q.nbind(Search.find, Search);
+
+module.exports = {};

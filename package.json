@@ -4,7 +4,7 @@
   "description": "Background job posting search for job seeker app",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "mocha",
     "start": "nodemon index.js"
   },
   "repository": {
@@ -22,10 +22,13 @@
   },
   "homepage": "https://github.com/jfbriggs/background-job-search#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
     "gulp": "^3.9.1",
-    "gulp-uglify": "^2.0.1"
+    "gulp-uglify": "^2.0.1",
+    "mocha": "^3.2.0"
   },
   "dependencies": {
-    "express": "^4.15.0"
+    "express": "^4.15.0",
+    "q": "^1.4.1"
   }
 }
