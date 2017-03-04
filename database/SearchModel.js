@@ -16,9 +16,9 @@ var searchSchema = new mongoose.Schema({
     required: true
   },
 
-  results: [{title: String, company: String, location: String, link: String}],
+  results: [{title: String, company: String, location: String, link: String, description: String}],
 
-  dateCreated {
+  dateCreated: {
     type: Date
   }
 
