@@ -18,4 +18,8 @@ Queue.prototype.getSize = function() {
   return this.size;
 }
 
+Queue.prototype.list = function() {
+  return this.storage;
+}
+
 module.exports = Queue;

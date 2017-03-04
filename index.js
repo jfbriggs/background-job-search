@@ -3,7 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-var router = require('./utils/routes');
+var router = require('./config/routes');
 
 // === Define web server port ===
 var port = process.env.PORT || 4111;
