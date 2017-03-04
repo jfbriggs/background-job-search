@@ -20,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/jfbriggs/background-job-search/issues"
   },
-  "homepage": "https://github.com/jfbriggs/background-job-search#readme"
+  "homepage": "https://github.com/jfbriggs/background-job-search#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^2.0.1"
+  },
+  "dependencies": {
+    "express": "^4.15.0"
+  }
 }
