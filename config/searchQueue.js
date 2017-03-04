@@ -2,9 +2,9 @@ var Queue = require('../utils/queue');
 
 // Create in-memory queue of searches to be run
 
-var searchQueue = new Queue;
-
 var key = 'Ap2jgrawAB@R(@r903bur3b3bABFiabojosabij2r02bjrwabWABIFJBAWIBwjooeijsoijvoasijvowirAB';
+
+var searchQueue = new Queue;
 
 module.exports.addSearch = function(req, res) {
   var searchObj = {
@@ -27,7 +27,7 @@ module.exports.addSearch = function(req, res) {
 }
 
 module.exports.getNext = function() {
-  if (searchQueu.getsize() > 0) {
+  if (searchQueue.getsize() > 0) {
     return searchQueue.pull();
   }
   return null;

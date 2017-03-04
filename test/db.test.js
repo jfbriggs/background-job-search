@@ -3,10 +3,10 @@ var Search = require('../database/SearchModel.js');
 var searchCtrl = require('../database/SearchController.js');
 var mongoose = require('mongoose');
 
+
 describe('Database Tests', function() {
-  it ('should pass with flying colors', function() {
-    expect(false).to.be.false;
-  });
+
+  mongoose.connect('mongodb://localhost/jobsearch');
 
   it ('should properly create search data in the database', function() {
     var searchResults = [
@@ -17,17 +17,18 @@ describe('Database Tests', function() {
     var searchData = {
       label: 'SWE search 2016',
       criteria: 'software engineer san francisco awesome',
-      userId: '1aiojsf0924fiofa209',
-      results: searchResults,
-      dateCreated: new Date()
+      user: '1aiojsf0924fiofa209'
     }
 
-    Search.create(searchData, function(err, search) {
-      if (err) {
-        console.log(err);
-      }
-      console.log(search);
+    searchCtrl.storeResults(searchResults, searchData, function(data) {
+      Search.find({}, function(err, searches) {
+        if (err) {
+          console.log(err);
+        }
+        expect(searches.length).to.not.equal(0);
+      });
     });
+
 
 
   });
