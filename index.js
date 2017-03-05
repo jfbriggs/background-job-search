@@ -19,7 +19,10 @@ app.use(bodyParser.json());
 // Directs all api requests to the router
 app.use('/api/', router);
 
+var lever = require('./config/searchers/lever');
+
 
 app.listen(port, function() {
   console.log('Background-Job-Search now running on port', port);
+  lever();
 });
