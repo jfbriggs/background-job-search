@@ -3,6 +3,8 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
+var searchManager = require('./config/searchManager');
+
 var router = require('./config/routes');
 
 // === Define web server port ===
@@ -19,10 +21,8 @@ app.use(bodyParser.json());
 // Directs all api requests to the router
 app.use('/api/', router);
 
-var lever = require('./config/searchers/lever');
-
+searchManager();
 
 app.listen(port, function() {
   console.log('Background-Job-Search now running on port', port);
-  lever();
 });
