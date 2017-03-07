@@ -1,24 +1,32 @@
 var Queue = require('../utils/queue');
+var searchManager = require('./searchManager');
 
 // Create in-memory queue of searches to be run
 
 var key = 'Ap2jgrawAB@R(@r903bur3b3bABFiabojosabij2r02bjrwabWABIFJBAWIBwjooeijsoijvoasijvowirAB';
 
-var searchQueue = new Queue;
+var searchQueue = new Queue();
 
 module.exports.addSearch = function(req, res) {
   var searchObj = {
     city: req.body.city,
     title: req.body.title,
     userId: req.body.user,
-    emamil: req.body.email,
-    label: req.body.name
+    email: req.body.email,
+    label: req.body.label
   };
 
+  console.log(searchManager.isRunning);
+
   if (req.body.key === key) {
-    console.log('New search request from user: ' + req.body.user + '.  Key matches, adding search with label: ' + req.body.name);
+    console.log('New search request from user: ' + req.body.user + '.  Key matches, adding search with label: ' + req.body.label);
     searchQueue.add(searchObj);
     res.sendStatus(200);
+    console.log('Running?', searchManager.isRunning);
+    if (searchManager.isRunning === false) {
+      console.log('Search Manager not currently running.  Activating.')
+      searchManager.runSearch();
+    }
   } else {
     console.log('New search request from user:' + req.body.user + ' .  Key does not match.  Not adding.');
     res.sendStatus(400);
@@ -28,7 +36,7 @@ module.exports.addSearch = function(req, res) {
 }
 
 module.exports.getNext = function() {
-  if (searchQueue.getsize() > 0) {
+  if (searchQueue.getSize() > 0) {
     return searchQueue.pull();
   }
   return null;
