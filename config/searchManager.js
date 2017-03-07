@@ -11,10 +11,11 @@ var searchQueue = require('./searchQueue');
 
 // Declare function to initiate the search process
 
-module.exports = function(input, metadata) {
+module.exports = function(metadata) {
 
-  lever(function(data) {
+  lever(metadata, function(data) {
     console.log('GOT THE DATA IN MANAGER.', data);
+    Search.storeResults(data, metadata);
   });
   // results.push(greenhouse(input));
   // results.push(icims(input));

@@ -8,9 +8,10 @@ var searchQueue = new Queue;
 
 module.exports.addSearch = function(req, res) {
   var searchObj = {
-    location: req.body.location,
+    city: req.body.city,
     title: req.body.title,
     userId: req.body.user,
+    emamil: req.body.email,
     label: req.body.name
   };
 

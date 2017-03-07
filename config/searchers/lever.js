@@ -9,13 +9,12 @@ var grabPostingData = function(array, cb) {
     var data = {};
     axios.get(array[index]).then(function(res) {
       var $ = cheerio.load(res.data);
-      data.company = $('.main-footer-text a').text().split(' ')[0];
+      data.company = $('title').text().split(' - ')[0];
       data.title = $('.posting-headline h2').text();
       data.location = $('.sort-by-time').text();
       data.link = array[index];
 
       console.log(data);
-      console.log('Has title?', !!data.title);
 
       if (data.title) {
         postings.push(data);
@@ -46,32 +45,65 @@ var grabPostingData = function(array, cb) {
 
 };
 
-module.exports = function(cb) {
+module.exports = function(metadata, cb) {
   var results = [];
 
-  axios.get('http://www.bing.com/search?q=site%3Ajobs.lever.co%20%22software%20engineer%22%20shopify%20-instreamset%3Aurl%3A%22%3Flever-via%22%20-instreamset%3Aurl%3A%22%3Fby%22&qs=n&form=QBRE&sp=-1&pq=site%3Ajobs.lever.co%20%22software%20engineer%22%20shopify%20-instreamset%3Aurl%3A%22%3Flever-via%22%20-instreamset%3Aurl%3A%22%3Fby%22').then(function(res) {
+  var searchTitle = metadata.title.split(' ').join('%20');
+  var searchCity = metadata.city.split(' ').join('%20');
+
+  var currentStart = 11;
+  var dupes = false;
+
+  axios.get('http://www.bing.com/search?q=site%3ajobs.lever.co+%22' + searchTitle + '%22+%22' + searchCity + '%22+-instreamset%3aurl%3a%22lever-via%22+-instreamset%3aurl%3a%22%3fby%22&qs=n&sp=-1&pq=site%3ajobs.lever.co+%22' + searchTitle + '%22+%22' + searchCity + '%22+-instreamset%3aurl%3a%22lever-via%22+-instreamset%3aurl%3a%22%3fby%22').then(function(res) {
+    console.log('Getting first page of results.');
     var $ = cheerio.load(res.data);
     $('a').each(function(i, elem) {
       var link = $(this).attr('href');
-      if (link !== undefined && link.substring(0, 4) === 'http' && !link.includes('apply') && link.substring(10, 19) !== 'microsoft') {
+      if (link !== undefined && link.substring(0, 4) === 'http' && !link.includes('apply') && link.substring(10, 19) !== 'microsoft' && !link.includes('location') && !link.includes('team') && !link.includes('commitment')) {
         results.push($(this).attr('href'));
       }
     });
 
-    setTimeout(function() {
-      axios.get('http://www.bing.com/search?q=site%3ajobs.lever.co+%22software+engineer%22+shopify+-instreamset%3aurl%3a%22%3flever-via%22+-instreamset%3aurl%3a%22%3fby%22&qs=n&sp=-1&pq=site%3ajobs.lever.co+%22software+engineer%22+shopify+-instreamset%3aurl%3a%22%3flever-via%22+-instreamset%3aurl%3a%22%3fby%22&first=11').then(function(res) {
-        var $ = cheerio.load(res.data);
-        $('a').each(function(i, elem) {
-          var link = $(this).attr('href');
-          if (link !== undefined && link.substring(0, 4) === 'http' && !link.includes('apply') && link.substring(10, 19) !== 'microsoft') {
-            results.push($(this).attr('href'));
-          }
-        });
+    var getNextPage = function() {
+      setTimeout(function() {
+        axios.get('http://www.bing.com/search?q=site%3ajobs.lever.co+%22' + searchTitle + '%22+%22' + searchCity + '%22+-instreamset%3aurl%3a%22lever-via%22+-instreamset%3aurl%3a%22%3fby%22&qs=n&sp=-1&pq=site%3ajobs.lever.co+%22' + searchTitle + '%22+%22' + searchCity + '%22+-instreamset%3aurl%3a%22lever-via%22+-instreamset%3aurl%3a%22%3fby%22&first=' + currentStart + '&FORM=PERE').then(function(res) {
+          console.log('Getting next pag of results starting at result #', currentStart);
+          var $ = cheerio.load(res.data);
+          $('a').each(function(i, elem) {
+            var link = $(this).attr('href');
+            if (link !== undefined && link.substring(0, 4) === 'http' && !link.includes('apply') && link.substring(10, 19) !== 'microsoft' && !link.includes('location') && !link.includes('team') && !link.includes('commitment')) {
+              if (results.includes($(this).attr('href'))) {
+                dupes = true;
+              } else {
+                results.push($(this).attr('href'));
+              }
+            }
+          });
 
-        return grabPostingData(results, cb);
-      });
-    
-    }, 5000);
+          currentStart += 14;
+          
+          console.log('Results length now:', results.length);
+
+          var sbCount = $('span.sb_count').text().split(' ')[2] 
+          console.log('sbCount is', sbCount);
+
+
+          if (currentStart <= sbCount) {
+            console.log('Another page of results available.  Getting.');
+            getNextPage();
+          } else {
+            console.log('No more pages of results left or getting duplicates.  Moving on.')
+            return grabPostingData(results, cb);
+          }
+
+        });
+      
+      }, 3000);
+      
+    }
+
+    getNextPage();
+
 
   });
 }

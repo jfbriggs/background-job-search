@@ -6,34 +6,33 @@ var addSearch = Q.nbind(Search.create, Search);
 var findSearches = Q.nbind(Search.find, Search);
 
 module.exports = {
-  getAllSearches: function(req, res, next) {
-    findSearches({}).then(function(results) {
+  getAllSearches: function(req, res) {
+    findSearches({'userId': req.params.id}).then(function(results) {
       if (results) {
         res.json(results);
-        next();
       }
     }).fail(function(err) {
-      next(err);
+      res.sendStatus(400);
     });
   },
 
-  storeResults: function(array, metadata, next) {
+  storeResults: function(array, metadata) {
     var newData = {
       label: metadata.label,
-      criteria: metadata.criteria,
-      userId: metadata.user,
+      city: metadata.city,
+      title: metadata.title,
+      userId: metadata.userId,
+      email: metadata.email,
       results: array,
       dateCreated: new Date()
     };
 
     addSearch(newData).then(function(savedSearch) {
       if (savedSearch) {
-        next(savedSearch);
-        return ('Search results & data saved successfully.');
+        console.log('Search results & data saved successfully.');
       }
     }).fail(function(err) {
       console.log('Error saving results:', err);
-      next(err);
     });
   }
 };

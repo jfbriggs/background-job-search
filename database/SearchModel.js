@@ -6,7 +6,12 @@ var searchSchema = new mongoose.Schema({
     required: true
   },
 
-  criteria: {
+  title: {
+    type: String,
+    required: true
+  },
+
+  city: {
     type: String,
     required: true
   },
@@ -16,7 +21,17 @@ var searchSchema = new mongoose.Schema({
     required: true
   },
 
-  results: [{title: String, company: String, location: String, link: String, description: String}],
+  email: {
+    type: String,
+    required: true
+  },
+
+  results: [{title: String, company: String, location: String, link: String}],
+
+  description: {
+    type: String,
+    required: false
+  },
 
   dateCreated: {
     type: Date

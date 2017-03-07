@@ -16,8 +16,10 @@ describe('Database Tests', function() {
 
     var searchData = {
       label: 'SWE search 2016',
-      criteria: 'software engineer san francisco awesome',
-      user: '1aiojsf0924fiofa209'
+      title: 'software engineer',
+      city: 'san francisco',
+      userId: '1aiojsf0924fiofa209',
+      email: 'test@example.com'
     }
 
     searchCtrl.storeResults(searchResults, searchData, function(data) {

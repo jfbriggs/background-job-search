@@ -21,7 +21,18 @@ app.use(bodyParser.json());
 // Directs all api requests to the router
 app.use('/api/', router);
 
-searchManager();
+// TEST DATA =======================
+var metadata = {
+  label: 'SWE 2017 LA',
+  title: 'software engineer',
+  city: 'los angeles',
+  userId: '1ifjir022g020g3',
+  email: 'jack@example.com'
+};
+
+searchManager(metadata);
+
+// =================================
 
 app.listen(port, function() {
   console.log('Background-Job-Search now running on port', port);
