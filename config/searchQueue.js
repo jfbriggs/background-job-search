@@ -11,7 +11,6 @@ module.exports.addSearch = function(req, res) {
   var searchObj = {
     city: req.body.city,
     title: req.body.title,
-    userId: req.body.user,
     email: req.body.email,
     label: req.body.label
   };

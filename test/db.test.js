@@ -18,7 +18,6 @@ describe('Database Tests', function() {
       label: 'SWE search 2016',
       title: 'software engineer',
       city: 'san francisco',
-      userId: '1aiojsf0924fiofa209',
       email: 'test@example.com'
     }
 

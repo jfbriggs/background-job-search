@@ -21,7 +21,6 @@ module.exports = {
       label: metadata.label,
       city: metadata.city,
       title: metadata.title,
-      userId: metadata.userId,
       email: metadata.email,
       results: array,
       dateCreated: new Date()
