@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var mailSender = require('./config/mailer');
 
 var searchManager = require('./config/searchManager');
 
@@ -9,6 +10,11 @@ var router = require('./config/routes');
 
 // === Define web server port ===
 var port = process.env.PORT || 4111;
+
+// === MAILER FUNCTIONALITY ===
+
+var rootDir = __dirname;
+mailSender(app, express, rootDir);
 
 // === Connect to Mongo ===
 mongoose.connect('mongodb://localhost/jobsearch');

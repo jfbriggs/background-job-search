@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title><%= subject %></title>
+    <style type="text/css">
+      /* ==== CSS FOR TEMPLATE ==== */
+
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+
+      .container {
+        /* border: 1px solid gray;
+        border-radius: 5px; */
+        padding: 10px;
+        margin-right: 15px;
+      }
+
+      .container-bottom {
+        width: 250px;
+        border-top: 1px solid gray;
+        padding-left: 0;
+        margin-left: 10px;
+      }
+
+      .logo img {
+        width: 40px;
+        height: 40px;
+      }
+
+      #logo-title {
+        display: inline-block;
+        color: black;
+        vertical-align: 70%;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .message-footer p {
+        font-size: 12px;
+        margin: 0 0 3px 0;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="message-header">
+        <h1>Hello!</h1>
+      </div>
+      <div class="message-body">
+        <p>The JobThrust extended search has successfully fulfilled your search request labeled <strong><%= label %></strong>.</p>
+        <p>Feel free to log in and check the results anytime!</p>
+      </div>
+    </div>
+    <div class="container container-bottom">
+      <div class="logo">
+        <a target="_blank" href="http://custom-env.a2uvfbnd4f.us-west-2.elasticbeanstalk.com/">
+          <img src="http://www.clipartlord.com/wp-content/uploads/2015/07/rocketship19.png" />
+          <div id="logo-title"><span><strong>JobThrust</strong></span></div>
+        </a>
+      </div>
+      <div class="message-footer">
+        <p><a target="_blank" href='http://custom-env.a2uvfbnd4f.us-west-2.elasticbeanstalk.com/login'>Log in to your account.</a></p>
+      </div>
+    </div>
+  </body>
+</html>

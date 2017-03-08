@@ -6,8 +6,11 @@ var jobvite = require('./searchers/jobvite');
 var taleo = require('./searchers/taleo');
 
 var Search = require('../database/SearchController');
-
 var searchQueue = require('./searchQueue');
+var mailer = require('./mailer');
+
+var request = require('request');
+var axios = require('axios');
 
 module.exports.isRunning = false;
 
@@ -25,11 +28,12 @@ module.exports.runSearch = function() {
     lever(metadata, function(data) {
       console.log('GOT THE DATA IN MANAGER.', data);
       Search.storeResults(data, metadata);
+      mailer.notify(metadata);
       module.exports.runSearch();
     });
   } else {
-    console.log('No more searches to run in queue.  Halting process.');
     isRunning = false;
+    console.log('No more searches to run in queue.  Halting process.  IsRunning now:', module.exports.isRunning);
     return;
   }
 
