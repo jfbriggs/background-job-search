@@ -1,6 +1,7 @@
 var mailer = require('express-mailer');
 var path = require('path');
 var ejs = require('ejs');
+var creds = require('../creds/creds');
 
 module.exports = function(app, express, rootDir) {
 
@@ -11,8 +12,8 @@ module.exports = function(app, express, rootDir) {
     port: 465, // port for secure SMTP
     transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
     auth: {
-      user: 'divvyappmailer@gmail.com',
-      pass: 'divvyappmailer1'
+      user: creds.email.user,
+      pass: creds.email.pass
     }
   });
 
