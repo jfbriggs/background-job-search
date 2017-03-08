@@ -13,7 +13,9 @@ router.post('/search', function(req, res) {
 
 // When a request for search results for a user is received, send all results
 
-router.get('/search/:id', searchController.getAllSearches);
+router.get('/search/:email', searchController.getAllSearches);
+
+router.post('/delete', searchController.removeSearch);
 
 
 module.exports = router;

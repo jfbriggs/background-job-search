@@ -7,7 +7,7 @@ var findSearches = Q.nbind(Search.find, Search);
 
 module.exports = {
   getAllSearches: function(req, res) {
-    findSearches({'userId': req.params.id}).then(function(results) {
+    findSearches({'email': req.params.email}).then(function(results) {
       if (results) {
         res.json(results);
       }
@@ -33,5 +33,18 @@ module.exports = {
     }).fail(function(err) {
       console.log('Error saving results:', err);
     });
+  },
+
+  removeSearch: function(req, res) {
+    Search.remove({_id: req.body.searchId}, function(err, doc, result) {
+      if (err) {
+          console.log('Error removing search from DB');
+          res.sendStatus(401);
+        } else {
+          res.sendStatus(200);
+          console.log('Removed search', req.body.searchId, 'from DB.');
+        }
+    });
   }
+
 };
