@@ -26,29 +26,15 @@ module.exports.runSearch = function() {
 
   if (metadata) {
     lever(metadata, function(data) {
-      console.log('GOT THE DATA IN MANAGER.', data);
+      console.log('Completed search "' + metadata.label + '".  Notifying ' + metadata.email);
       Search.storeResults(data, metadata);
       mailer.notify(metadata);
       module.exports.runSearch();
     });
   } else {
-    isRunning = false;
+    module.exports.isRunning = false;
     console.log('No more searches to run in queue.  Halting process.  IsRunning now:', module.exports.isRunning);
     return;
   }
 
 };
-
-// TEST DATA/FUNCTION ==============
-
-// var metadata = {
-//   label: 'SWE 2017 LA',
-//   title: 'software engineer',
-//   city: 'los angeles',
-//   userId: '1ifjir022g020g3',
-//   email: 'jack@example.com'
-// };
-
-// runSearch(metadata);
-
-// =================================
