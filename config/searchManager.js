@@ -9,9 +9,6 @@ var Search = require('../database/SearchController');
 var searchQueue = require('./searchQueue');
 var mailer = require('./mailer');
 
-var request = require('request');
-var axios = require('axios');
-
 module.exports.isRunning = false;
 
 // Declare function to initiate the search process
