@@ -17,7 +17,7 @@ var rootDir = __dirname;
 mailSender(app, express, rootDir);
 
 // === Connect to Mongo ===
-mongoose.connect('mongodb://localhost/jobsearch');
+mongoose.connect('mongodb://jobthrust:getj0bsm8@ds119810.mlab.com:19810/jobthrust-mongo');
 
 // ===== MIDDLEWARE =====
 

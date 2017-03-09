@@ -1,9 +1,10 @@
 var Queue = require('../utils/queue');
 var searchManager = require('./searchManager');
+var creds = require('../creds/creds');
 
 // Create in-memory queue of searches to be run
 
-var key = 'Ap2jgrawAB@R(@r903bur3b3bABFiabojosabij2r02bjrwabWABIFJBAWIBwjooeijsoijvoasijvowirAB';
+var key = creds.key;
 
 var searchQueue = new Queue();
 
