@@ -3,6 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var mailSender = require('./config/mailer');
+var creds = require('./creds/creds');
 
 var searchManager = require('./config/searchManager');
 
@@ -17,7 +18,7 @@ var rootDir = __dirname;
 mailSender(app, express, rootDir);
 
 // === Connect to Mongo ===
-mongoose.connect('mongodb://jobthrust:getj0bsm8@ds119810.mlab.com:19810/jobthrust-mongo');
+mongoose.connect(creds.mongo);
 
 // ===== MIDDLEWARE =====
 
