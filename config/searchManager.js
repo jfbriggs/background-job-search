@@ -24,10 +24,13 @@ module.exports.runSearch = function() {
   if (metadata) {
     lever(metadata, function(data) {
       greenhouse(metadata, data, function(accData) {
-        console.log('Completed search "' + metadata.label + '".  Notifying ' + metadata.email);
-        Search.storeResults(accData, metadata);
-        mailer.notify(metadata);
-        module.exports.runSearch();
+        jobvite(metadata, accData, function(moreData) {
+          console.log('Completed search "' + metadata.label + '".  Notifying ' + metadata.email);
+          Search.storeResults(moreData, metadata);
+          mailer.notify(metadata);
+          module.exports.runSearch();
+          
+        })
 
       });
     });

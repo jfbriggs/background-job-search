@@ -55,7 +55,7 @@ module.exports = function(metadata, priorData, cb) {
   var dupes = false;
 
 
-  axios.get('http://www.bing.com/search?q=site%3Aboards.greenhouse.io%20%22' + searchTitle + '%22%20%22' + searchCity + '%22%20intitle%3A%22job%20application%20for%22&qs=n&form=QBRE&sp=-1&pq=site%3Aboards.greenhouse.io%20%22' + searchTitle + '%22%20%22' + searchCity + '%22%20intitle%3A%22job%20application%20for%22').then(function(res) {
+  axios.get('http://www.bing.com/search?q=site%3Aboards.greenhouse.io%20%22' + searchTitle + '%22%20%22' + searchCity + '%22%20intitle%3A%22job%20application%20for%22&qs=n&form=QBRE&sp=-1&pq=site%3Aboards.greenhouse.io%20%22' + searchTitle + '%22%20%22' + searchCity + '%22%20intitle%3A%22job%20application%20for%22&FORM=PERE').then(function(res) {
     console.log('Getting first page of Greenhouse results.');
     var $ = cheerio.load(res.data);
     $('a').each(function(i, elem) {
@@ -67,7 +67,7 @@ module.exports = function(metadata, priorData, cb) {
 
     var getNextPage = function() {
       setTimeout(function() {
-        axios.get('http://www.bing.com/search?q=site%3aboards.greenhouse.io+%22' + searchTitle + '%22+%22' + searchCity + '%22+intitle%3a%22job+application+for%22&qs=n&sp=-1&pq=site%3aboards.greenhouse.io+%22' + searchTitle + '%22+%22' + searchCity + '%22+intitle%3a%22job+application+for%22&first=11&FORM=PERE').then(function(res) {
+        axios.get('http://www.bing.com/search?q=site%3aboards.greenhouse.io+%22' + searchTitle + '%22+%22' + searchCity + '%22+intitle%3a%22job+application+for%22&qs=n&sp=-1&pq=site%3aboards.greenhouse.io+%22' + searchTitle + '%22+%22' + searchCity + '%22+intitle%3a%22job+application+for%22&first=' + currentStart + '&FORM=PERE').then(function(res) {
           console.log('Getting next page of Greenhouse results starting at result #', currentStart);
           var $ = cheerio.load(res.data);
           $('a').each(function(i, elem) {
