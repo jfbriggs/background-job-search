@@ -30,8 +30,7 @@ module.exports.runSearch = function() {
           mailer.notify(metadata);
           module.exports.runSearch();
           
-        })
-
+        });
       });
     });
   } else {
