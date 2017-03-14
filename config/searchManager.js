@@ -23,10 +23,13 @@ module.exports.runSearch = function() {
 
   if (metadata) {
     lever(metadata, function(data) {
-      console.log('Completed search "' + metadata.label + '".  Notifying ' + metadata.email);
-      Search.storeResults(data, metadata);
-      mailer.notify(metadata);
-      module.exports.runSearch();
+      greenhouse(metadata, data, function(accData) {
+        console.log('Completed search "' + metadata.label + '".  Notifying ' + metadata.email);
+        Search.storeResults(accData, metadata);
+        mailer.notify(metadata);
+        module.exports.runSearch();
+
+      });
     });
   } else {
     module.exports.isRunning = false;
