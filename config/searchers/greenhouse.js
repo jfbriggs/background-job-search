@@ -9,9 +9,9 @@ var grabPostingData = function(array, priorData, cb) {
     var data = {};
     axios.get(array[index]).then(function(res) {
       var $ = cheerio.load(res.data);
-      data.company = $('.company-name').text().slice(3);
+      data.company = $('.company-name').text().split('at ')[1].split('\n')[0];
       data.title = $('.app-title').text();
-      data.location = $('.location').text();
+      data.location = $('.location').text().slice(9).split('\n')[0];
       data.link = array[index];
 
       console.log(data);
@@ -60,7 +60,7 @@ module.exports = function(metadata, priorData, cb) {
     var $ = cheerio.load(res.data);
     $('a').each(function(i, elem) {
       var link = $(this).attr('href');
-      if (link !== undefined && link.substring(0, 4) === 'http' && link.substring(10, 19) !== 'microsoft') {
+      if (link !== undefined && link.substring(0, 4) === 'http' && link.substring(10, 19) !== 'microsoft' && link.substring(8, 11) !== 'www') {
         results.push($(this).attr('href'));
       }
     });
@@ -72,7 +72,7 @@ module.exports = function(metadata, priorData, cb) {
           var $ = cheerio.load(res.data);
           $('a').each(function(i, elem) {
             var link = $(this).attr('href');
-            if (link !== undefined && link.substring(0, 4) === 'http' & link.substring(10, 19) !== 'microsoft') {
+            if (link !== undefined && link.substring(0, 4) === 'http' & link.substring(10, 19) !== 'microsoft' && link.substring(8, 11) !== 'www') {
               if (results.includes($(this).attr('href'))) {
                 dupes = true;
               } else {
