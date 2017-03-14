@@ -27,7 +27,7 @@ module.exports.runSearch = function() {
         jobvite(metadata, accData, function(moreData) {
           console.log('Completed search "' + metadata.label + '".  Notifying ' + metadata.email);
           Search.storeResults(moreData, metadata);
-          mailer.notify(metadata);
+          mailer.notify(metadata, moreData.length);
           module.exports.runSearch();
           
         });

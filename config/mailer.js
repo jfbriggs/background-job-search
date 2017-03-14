@@ -22,11 +22,12 @@ module.exports = function(app, express, rootDir) {
 
   // MAILER ROUTING
 
-  module.exports.notify = function(metadata) {
+  module.exports.notify = function(metadata, resultsLength) {
     app.mailer.send('email', {
       to: metadata.email, // REQUIRED. This can be a comma delimited string just like a normal email to field. 
       subject: 'Your JobThrust extended search has completed!', // REQUIRED.
-      label: metadata.label
+      label: metadata.label,
+      results: resultsLength
     }, function (err) {
       if (err) {
         // handle error
