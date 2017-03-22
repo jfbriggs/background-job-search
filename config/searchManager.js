@@ -4,6 +4,7 @@ var icims = require('./searchers/icims');
 var jazz = require('./searchers/greenhouse');
 var jobvite = require('./searchers/jobvite');
 var taleo = require('./searchers/taleo');
+var angelList = require('./searchers/angelList');
 
 var Search = require('../database/SearchController');
 var searchQueue = require('./searchQueue');
@@ -22,6 +23,14 @@ module.exports.runSearch = function() {
   var metadata = searchQueue.getNext();
 
   if (metadata) {
+
+    // angelList(metadata, function(moreData) {
+    //   console.log('Completed search "' + metadata.label + '".  Notifying ' + metadata.email);
+    //   Search.storeResults(moreData, metadata);
+    //   mailer.notify(metadata, moreData.length);
+    //   module.exports.runSearch();
+    // });
+
     lever(metadata, function(data) {
       greenhouse(metadata, data, function(accData) {
         jobvite(metadata, accData, function(moreData) {
@@ -33,6 +42,7 @@ module.exports.runSearch = function() {
         });
       });
     });
+    
   } else {
     module.exports.isRunning = false;
     console.log('No more searches to run in queue.  Halting process.  IsRunning now:', module.exports.isRunning);
